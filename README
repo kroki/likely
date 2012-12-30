@@ -1,0 +1,18 @@
+Define likely() and unlikely() macros to guide branch prediction.
+Implementation requires GNU tool-chain (GCC, GNU ld).
+
+Optional -D KROKI_LIKELY_REPORT[=RATIO] during compilation will enable
+prediction analysis.  RATIO should be a float between 0.0 and 1.0,
+default is 1.0.  Report on likely()/unlikely() with prediction rate
+less than or equal to RATIO will be printed to stderr on program exit.
+Prediction accounting is not thread-safe: when several threads try to
+increment a counter simultaneously some increments may be lost
+(however this should be a rare event and should not affect overall
+statistics).
+
+Defining KROKI_LIKELY_NOPOLLUTE will result in omitting
+likely()/unlikely() alias definition (functionality will still be
+available as kroki_likely()/kroki_unlikely()).
+
+Inspired by Ulrich Drepper's "What Every Programmer Should Know About Memory"
+(http://www.akkadia.org/drepper/cpumemory.pdf) annex A.2.
